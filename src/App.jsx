@@ -1,34 +1,90 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect, useState } from "react"
+import "./App.css"
+import BasicSelect from "./components/Selector"
+import { ThemeProvider, createTheme } from "@mui/material/styles"
+import { getServers, searchTorrent } from "./services/api"
+import { Box, Button, TextField } from "@mui/material"
+import Header from "./components/Header"
+import Results from "./components/Results"
+
+const darkTheme = createTheme({
+  palette: {
+    mode: "dark",
+  },
+})
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [server, setServer] = useState("")
+  const [servers, setServers] = useState([])
+  const [search, setSearch] = useState("")
+  const [results, setResults] = useState([])
+
+  async function getServersData() {
+    const data = await getServers()
+    setServers(data?.supported_sites)
+  }
+
+  async function getResults() {
+    const data = await searchTorrent(server, search)
+    setResults(data?.data)
+  }
+
+  const handleClick = () => {
+    getResults()
+  }
+
+  useEffect(() => {
+    getServersData()
+  }, [])
+
+  useEffect(() => {
+    console.log(results)
+  }, [results])
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
+    <ThemeProvider theme={darkTheme}>
+      <Header />
+      <br />
+      <p>
+        <code>Select the torrent server:</code>
       </p>
-    </>
+      <Box
+        sx={{ width: "32rem", display: "flex", justifyContent: "space-around" }}
+      >
+        <TextField
+          id="outlined-basic"
+          label="Outlined"
+          variant="outlined"
+          color="warning"
+          sx={{ width: "70%" }}
+          onChange={(event) => {
+            setSearch(event.target.value)
+          }}
+        />
+        {servers && (
+          <BasicSelect
+            label={"Server"}
+            items={servers}
+            selection={server}
+            setSelection={setServer}
+          />
+        )}
+      </Box>
+      <br />
+      <Button
+        disabled={search == "" || server == ""}
+        color="warning"
+        variant="contained"
+        onClick={handleClick}
+      >
+        Search!
+      </Button>
+      <br />
+      <p className="read-the-docs">
+        Going to look for "{search}" in "{server}"
+      </p>
+      {results && <Results results={results}/>}
+    </ThemeProvider>
   )
 }
 
