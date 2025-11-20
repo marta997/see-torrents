@@ -1,5 +1,5 @@
 import { Box } from "@mui/material"
-import logo from "/icon.png"
+import logo from "/kj-logo.png"
 
 const Header = () => {
   return (
@@ -11,17 +11,14 @@ const Header = () => {
         alignItems: "center",
       }}
     >
-      <div style={{ width: "170px", height: "170px", overflow: "hidden" }}>
-        <img
-          style={{
-            width: "400px",
-            height: "300px",
-            margin: "-80px 0 0 -100px",
-          }}
-          src={logo}
-          className="logo"
-        />
-      </div>
+      <img
+        style={{
+          width: "170px",
+          height: "170px",
+        }}
+        src={logo}
+        className="logo"
+      />
       <h1>See Torrent</h1>
     </Box>
   )
