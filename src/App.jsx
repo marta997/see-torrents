@@ -55,7 +55,9 @@ function App() {
             />
           </Box>
           <Box>{loading && <CircularProgress color="secondary" />}</Box>
-          <Box>{results && <Results results={results} />}</Box>
+          <Box>
+            <Results results={results} />
+          </Box>
           <Box>
             <Error />
           </Box>

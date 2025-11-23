@@ -18,7 +18,6 @@ const Searcher = (props) => {
     const data = await searchTorrent(server, search)
     if (data == ERROR) {
       setError(true)
-      setResults([])
     } else {
       setResults(data?.data)
     }
@@ -27,6 +26,7 @@ const Searcher = (props) => {
 
   const handleClick = () => {
     setError(false)
+    setResults([])
     getResults()
   }
 
