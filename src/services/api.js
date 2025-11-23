@@ -1,6 +1,7 @@
 import axios from "axios"
 
 const API_URL = "http://localhost:8009"
+export const ERROR = 'error'
 
 export const getServers = async () => {
   try {
@@ -18,6 +19,6 @@ export const searchTorrent = async (server, search) => {
     )
     return response?.data
   } catch (error) {
-    console.error(error)
+    return ERROR
   }
 }

@@ -1,10 +1,9 @@
-//import { useState, useContext } from "react"
-import { useState } from "react"
+import { useState, useContext } from "react"
 
 import { Box, Button, TextField } from "@mui/material"
 
-// import ErrorContext from "../context/ErrorContext"
-import { searchTorrent } from "../services/api"
+import ErrorContext from "../context/ErrorContext"
+import { ERROR, searchTorrent } from "../services/api"
 
 import BasicSelect from "./Selector"
 
@@ -12,16 +11,22 @@ const Searcher = (props) => {
   const { servers, setResults, setLoading } = props
   const [search, setSearch] = useState("")
   const [server, setServer] = useState("")
-  // const { setError } = useContext(ErrorContext)
+  const { setError } = useContext(ErrorContext)
 
   async function getResults() {
     setLoading(true)
     const data = await searchTorrent(server, search)
-    setResults(data?.data)
+    if (data == ERROR) {
+      setError(true)
+      setResults([])
+    } else {
+      setResults(data?.data)
+    }
     setLoading(false)
   }
 
   const handleClick = () => {
+    setError(false)
     getResults()
   }
 

@@ -1,10 +1,16 @@
 import { useEffect, useState } from "react"
+
 import "./App.css"
 import { ThemeProvider, createTheme } from "@mui/material/styles"
+
 import { getServers } from "./services/api"
-import { Box, CircularProgress, TextField } from "@mui/material"
+import { ErrorContextProvider } from "./context/ErrorContext"
+
+import { Box, CircularProgress } from "@mui/material"
+
 import Header from "./components/Header"
 import Results from "./components/Results"
+import Error from "./components/Error"
 import Searcher from "./components/Searcher"
 
 const darkTheme = createTheme({
@@ -30,6 +36,7 @@ function App() {
 
   return (
     <ThemeProvider theme={darkTheme}>
+      <ErrorContextProvider>
         <Box
           sx={{
             display: "flex",
@@ -49,7 +56,11 @@ function App() {
           </Box>
           <Box>{loading && <CircularProgress color="secondary" />}</Box>
           <Box>{results && <Results results={results} />}</Box>
+          <Box>
+            <Error />
+          </Box>
         </Box>
+      </ErrorContextProvider>
     </ThemeProvider>
   )
 }
