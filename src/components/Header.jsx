@@ -5,9 +5,8 @@ const Header = () => {
   return (
     <Box
       sx={{
-        width: "34rem",
         display: "flex",
-        justifyContent: "space-around",
+        justifyContent: "center",
         alignItems: "center",
       }}
     >
