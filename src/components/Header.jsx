@@ -5,7 +5,7 @@ const Header = () => {
   return (
     <Box
       sx={{
-        width: "32rem",
+        width: "34rem",
         display: "flex",
         justifyContent: "space-around",
         alignItems: "center",
@@ -19,7 +19,7 @@ const Header = () => {
         src={logo}
         className="logo"
       />
-      <h1>See Torrent</h1>
+      <h1>See Torrents</h1>
     </Box>
   )
 }
