@@ -3,7 +3,7 @@ import "./App.css"
 import BasicSelect from "./components/Selector"
 import { ThemeProvider, createTheme } from "@mui/material/styles"
 import { getServers, searchTorrent } from "./services/api"
-import { Box, Button, TextField } from "@mui/material"
+import { Alert, Box, Button, CircularProgress, TextField } from "@mui/material"
 import Header from "./components/Header"
 import Results from "./components/Results"
 
@@ -18,6 +18,7 @@ function App() {
   const [servers, setServers] = useState([])
   const [search, setSearch] = useState("")
   const [results, setResults] = useState([])
+  const [loading, setLoading] = useState(false)
 
   async function getServersData() {
     const data = await getServers()
@@ -25,8 +26,10 @@ function App() {
   }
 
   async function getResults() {
+    setLoading(true)
     const data = await searchTorrent(server, search)
     setResults(data?.data)
+    setLoading(false)
   }
 
   const handleClick = () => {
@@ -83,7 +86,8 @@ function App() {
       <p className="read-the-docs">
         Going to look for "{search}" in "{server}"
       </p>
-      {results && <Results results={results}/>}
+      {loading && <CircularProgress color="secondary" />}
+      {results && <Results results={results} />}
     </ThemeProvider>
   )
 }
