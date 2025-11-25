@@ -14,7 +14,6 @@ export default function DenseTable(props) {
       <Table sx={{ minWidth: 450 }} size="small" aria-label="a dense table">
         <TableHead>
           <TableRow>
-
             {rowNames.map((name) => (
               <TableCell key={name}>
                 {name}
