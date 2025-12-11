@@ -32,6 +32,7 @@ function App() {
   const [servers, setServers] = useState([])
   const [rows, setRows] = useState([])
   // TODO: use a context or something?
+  const [server, setServer] = useState("")
   const [results, setResults] = useState([])
   const [loading, setLoading] = useState(false)
 
@@ -51,6 +52,11 @@ function App() {
     setRows(serverRows)
   }, [servers])
 
+  const onClickLink = (event) => {
+    let selectedServer = event.target.text
+    setServer(selectedServer)
+  }
+
   return (
     <ThemeProvider theme={darkTheme}>
       <ErrorContextProvider>
@@ -69,6 +75,8 @@ function App() {
               servers={servers}
               setResults={setResults}
               setLoading={setLoading}
+              server={server}
+              setServer={setServer}
             />
           </Box>
           <Box>{loading && <CircularProgress color="secondary" />}</Box>
@@ -79,7 +87,7 @@ function App() {
             <Error />
           </Box>
           <Box sx={{ marginTop: '2rem' }}>
-            <DenseTable rowNames={rowNames} rows={rows} />
+            <DenseTable rowNames={rowNames} rows={rows} onClickLink={onClickLink} />
           </Box>
         </Box>
       </ErrorContextProvider>

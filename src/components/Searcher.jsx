@@ -8,9 +8,8 @@ import { ERROR, searchTorrent } from "../services/api"
 import BasicSelect from "./Selector"
 
 const Searcher = (props) => {
-  const { servers, setResults, setLoading } = props
+  const { servers, setResults, setLoading, server, setServer } = props
   const [search, setSearch] = useState("")
-  const [server, setServer] = useState("")
   const { setError } = useContext(ErrorContext)
 
   async function getResults() {
